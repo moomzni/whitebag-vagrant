@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+
+  config.vm.define :web do |web_config|
+    web_config.vm.box = "precise64"
+    web_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    web_config.vm.customize ["modifyvm", :id, "--memory", 256]
+    web_config.vm.network :hostonly, "192.168.1.10"
+    web_config.vm.provision :shell, :path => "web.sh"
+  end
+
+  config.vm.define :db do |db_config|
+    db_config.vm.box = "precise64"
+    db_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    db_config.vm.customize ["modifyvm", :id, "--memory", 512]
+    db_config.vm.network :hostonly, "192.168.1.11"
+    db_config.vm.provision :shell, :path => "db.sh"
+  end
+
+end
